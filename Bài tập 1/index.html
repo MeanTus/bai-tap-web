@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="demo">
+    </div>
+    <script>
+        function F1() {
+            $.ajax({
+                url: 'https://62145f6c89fad53b1f11e4c0.mockapi.io/book',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function(k, v){
+                        var s = `<div onClick=deleteBook(${v.id})> ${v.id} - ${v.nameBook} - ${v.quantity} - ${v.author}</div>`;
+                        $('#demo').append(s);
+                    });
+                }
+            });
+        }
+        F1();
+
+        function deleteBook(id) {
+            console.log(id)
+            $.ajax({
+                url: `https://62145f6c89fad53b1f11e4c0.mockapi.io/book/${id}`,
+                type: 'delete',
+                dataType: 'json',
+                success: function (data) {
+                    F1();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
